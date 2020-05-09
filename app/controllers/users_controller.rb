@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   
-  before_action :set_user, only: [:show, :edit, :update]
-  before_action :require_user, only: [:edit, :update] #checks if a user is logged in
-  before_action :require_same_user, only: [:edit, :update] #checks if a user is actoning onw items
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_user, only: [:edit, :update, :destroy] #checks if a user is logged in
+  before_action :require_same_user, only: [:edit, :update, :destroy] #checks if a user is actoning onw items
   
   def show
     @articles = @user.articles.paginate(page: params[:page], per_page: 3)
@@ -25,6 +25,13 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+  
+  def destroy
+    @user.destroy
+    session[:user_id] = nil
+    flash[:notice] = "You have successfully deleted your account all associated articles"
+    redirect_to articles_path
   end
   
   def edit
