@@ -12,11 +12,14 @@
             <div class="card-text text-left">
               <%= simple_format(@article.description) %>
             </div>
-            <%= link_to "Edit", edit_article_path(@article), class: "btn btn btn-outline-info" %>
-            <%= link_to "Delete", article_path(@article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure" } %>
+            <% if logged_in? && @article.user == current_user %>
+              <%= link_to "Edit", edit_article_path(@article), class: "btn btn btn-outline-info" %>
+              <%= link_to "Delete", article_path(@article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure" } %>
+            <% end %>
           </div>
           <div class="card-footer text-muted">
-            2 days ago
+            <small>Created <%= time_ago_in_words(@article.created_at) %> ago |
+            edited <%= time_ago_in_words(@article.updated_at) %> ago</small>
           </div>
         </div>
       </div>
