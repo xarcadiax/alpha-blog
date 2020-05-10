@@ -1,4 +1,7 @@
 @import 'bootstrap/dist/css/bootstrap'; //bootstrap override
+
+html { overflow-y: scroll; }
+
 .navbar {
   background-color: black !important;
 }
